@@ -1,10 +1,6 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-
-class ShowPostTest extends TestCase
+class ShowPostTest extends FeatureTestCase
 {
     function test_a_user_can_see_the_post_details()
     {
@@ -13,36 +9,31 @@ class ShowPostTest extends TestCase
             'name' => 'Cesar Acual',
         ]);
 
-        $post = factory(\App\Post::class)->make([
+        $post = $this->createPost([
             'title' => 'Como instalar Laravel',
-            'content' => 'Este es el contenido del post'
+            'content' => 'Este es el contenido del post',
+            'user_id' => $user->id,
         ]);
-
-        $user->posts()->save($post);
 
         // When
         $this->visit($post->url)
             ->seeInElement('h1', $post->title)
             ->see($post->content)
-            ->see($user->name);
+            ->see('Cesar Acual');
     }
 
-     function test_post_url_with_wrong_slugs_still_work()
-     {
-         // Having
-         $user = $this->defaultUser();
+    function test_old_urls_are_redirected()
+    {
+        // Having
+        $post = $this->createPost([
+            'title' => 'Old title',
+        ]);
 
-         $post = factory(\App\Post::class)->make([
-             'title' => 'Old title',
-         ]);
+        $url = $post->url;
 
-         $user->posts()->save($post);
+        $post->update(['title' => 'New title']);
 
-         $url = $post->url;
-
-         $post->update(['title' => 'New title']);
-
-         $this->visit($url)
-             ->seePageIs($post->url);
-     }
+        $this->visit($url)
+            ->seePageIs($post->url);
+    }
 }
