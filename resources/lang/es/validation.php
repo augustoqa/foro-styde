@@ -133,6 +133,9 @@ return [
         'email'    => [
             'unique' => 'El :attribute ya ha sido registrado.',
         ],
+        'comment'  => [
+            'required' => 'El campo :attribute es obligatorio.'
+        ]
     ],
 
     /*
@@ -177,5 +180,6 @@ return [
         'time'                  => 'hora',
         'subject'               => 'asunto',
         'message'               => 'mensaje',
+        'comment'               => 'comentario',
     ],
 ];
