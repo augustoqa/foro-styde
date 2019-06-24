@@ -12,6 +12,9 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
+
+use App\User;
+
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
 
@@ -30,6 +33,18 @@ $factory->define(App\Post::class, function (Faker\Generator $faker) {
         'pending' => $faker->boolean(),
         'user_id' => function () {
             return factory(App\User::class)->create()->id;
+        }
+    ];
+});
+
+$factory->define(\App\Comment::class, function (Faker\Generator $faker) {
+    return [
+        'comment' => $faker->paragraph,
+        'post_id' => function () {
+            return factory(\App\Post::class)->create()->id;
+        },
+        'user_id' => function () {
+            return factory(\App\User::class)->create()->id;
         }
     ];
 });
