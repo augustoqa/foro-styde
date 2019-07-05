@@ -17,13 +17,16 @@
 
     {!! Form::close() !!}
 
-    @foreach ($post->latestComments as $comment)
+    @foreach ($post->latestComments() as $comment)
         <article class="{{ $comment->answer ? 'answer' : '' }}">
-            {{ $comment->comment }}
+            {{ $comment->comment }} - {{ $comment->post->user->name }}
 
             {!! Form::open(['route' => ['comments.accept', $comment], 'method' => 'POST']) !!}
                 <button type="submit">Aceptar respuesta</button>
             {!! Form::close() !!}
         </article>
     @endforeach
+
+    {{ $post->latestComments()->render() }}
+
 @endsection
