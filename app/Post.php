@@ -2,6 +2,7 @@
 
 namespace App;
 
+use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -38,5 +39,10 @@ class Post extends Model
     public function getUrlAttribute()
     {
         return route('posts.show', [$this->id, $this->slug]);
+    }
+
+    public function getSafeHtmlContentAttribute()
+    {
+        return Markdown::convertToHtml(e($this->content));
     }
 }
