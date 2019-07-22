@@ -39,10 +39,8 @@ class RegistrationTest extends FeatureTestCase
             return $mail->token->id == $token->id;
         });
 
-        // todo: finish this feature!
-
-        // $this->seeRouteIs('register_confirmation')
-        //     ->see('Gracias por registrarte')
-        //     ->see('Enviamos a tu email un enlace para que inicies sesión');
+        $this->seeRouteIs('register_confirmation')
+            ->see('Gracias por registrarte')
+            ->see('Enviamos a tu email un enlace para que inicies sesión');
     }
 }
