@@ -43,4 +43,49 @@ class RegistrationTest extends FeatureTestCase
             ->see('Gracias por registrarte')
             ->see('Enviamos a tu email un enlace para que inicies sesión');
     }
+
+    function test_create_user_form_validation()
+    {
+        $this->visitRoute('register')
+            ->press('Regístrate')
+            ->seePageIs('register')
+            ->seeErrors([
+                'email' => 'El campo correo electrónico es obligatorio',
+                'username' => 'El campo usuario es obligatorio',
+                'first_name' => 'El campo nombre es obligatorio',
+                'last_name' => 'El campo apellido es obligatorio'
+            ]);
+    }
+
+    function test_that_the_mail_is_valid()
+    {
+        $this->visitRoute('register')
+            ->type('checha', 'email')
+            ->type('Ducke', 'username')
+            ->type('Cesar', 'first_name')
+            ->type('Acual', 'last_name')
+            ->press('Regístrate')
+            ->seePageIs('register')
+            ->seeErrors([
+                'email' => 'correo electrónico no es un correo válido'
+            ]);
+    }
+
+    function test_user_email_has_not_been_taken()
+    {
+        $this->defaultUser([
+            'email' => 'chechaacual@gmail.com',
+        ]);
+
+        $this->visitRoute('register')
+            ->type('chechaacual@gmail.com', 'email')
+            ->type('Ducke', 'username')
+            ->type('Cesar', 'first_name')
+            ->type('Acual', 'last_name')
+            ->press('Regístrate')
+            ->seePageIs('register')
+            ->seeErrors([
+                'email' => 'El correo electrónico ya ha sido registrado.'
+            ]);
+    }
 }
