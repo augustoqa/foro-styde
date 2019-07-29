@@ -9,7 +9,7 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
      *
      * @var string
      */
-    protected $baseUrl = 'http://forostyde.local';
+    protected $baseUrl = 'http://localhost';
     
     /**
      * @var \App\User
