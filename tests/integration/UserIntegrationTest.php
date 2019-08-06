@@ -1,11 +1,7 @@
 <?php
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-
-class UserIntegrationTest extends TestCase
+class UserIntegrationTest extends FeatureTestCase
 {
-    use DatabaseTransactions;
-
     function test_a_user_create_a_post_and_subscribed_to_it()
     {
         $user = $this->defaultUser();

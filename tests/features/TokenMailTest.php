@@ -5,7 +5,7 @@ use App\Token;
 use App\User;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Mail;
-use Symfony\Component\DomCrawler\Crawler;
+use \Symfony\Component\DomCrawler\Crawler;
 
 class TokenMailTest extends FeatureTestCase
 {
