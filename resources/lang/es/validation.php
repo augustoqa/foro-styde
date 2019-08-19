@@ -181,5 +181,6 @@ return [
         'subject'               => 'asunto',
         'message'               => 'mensaje',
         'comment'               => 'comentario',
+        'category_id'           => 'categoría',
     ],
 ];

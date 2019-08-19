@@ -6,9 +6,12 @@ class UserIntegrationTest extends FeatureTestCase
     {
         $user = $this->defaultUser();
 
+        $category = factory(\App\Category::class)->create();
+
         $post = $user->createPost([
             'title' => 'Como programar en Java',
-            'content' => 'Este es el contenido'
+            'content' => 'Este es el contenido',
+            'category_id' => $category->id
         ]);
 
         $this->seeInDatabase('subscriptions', [
