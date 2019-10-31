@@ -20,11 +20,14 @@ trait CanBeVoted
 
     public function getVoteComponentAttribute()
     {
-        return Html::tag('app-vote', '', [
-            'post_id' => $this->id,
-            'score' => $this->score,
-            'vote' => $this->current_vote
-        ]);
+        if (auth()->check()) {
+            return Html::tag('app-vote', '', [
+                'module' => $this->getTable(),
+                'id' => $this->id,
+                'score' => $this->score,
+                'vote' => $this->current_vote
+            ]);
+        }
     }
 
     public function getVoteFrom(User $user)
@@ -33,6 +36,7 @@ trait CanBeVoted
             ->where('user_id', $user->id)
             ->value('vote');
     }
+    
     public function upvote()
     {
         $this->addVote(1);

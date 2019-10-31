@@ -41,9 +41,11 @@
             <h4>Comentarios</h4>
 
             @foreach ($post->latestComments() as $comment)
-                <article class="{{ $comment->answer ? 'answer' : '' }}">
+                <article class="comment {{ $comment->answer ? 'answer' : '' }}">
 
                     {!! $comment->safe_html_comment !!} - {{ $comment->post->user->name }}
+
+                    {{ $comment->vote_component }}
 
                     @if(Gate::allows('accept', $comment) && !$comment->answer)
                         {!! Form::open(['route' => ['comments.accept', $comment], 'method' => 'POST']) !!}
