@@ -42,9 +42,9 @@ class Post extends Model
         return $this->comments()->orderBy('created_at', 'DESC')->paginate();
     }
 
-    public function scopeCategory($query, Category $category)
+    public function scopeCategory($query, Category $category = null)
     {
-        if ($category->exists) {
+        if ($category && $category->exists) {
             $query->where('category_id', $category->id);
         }
     }
