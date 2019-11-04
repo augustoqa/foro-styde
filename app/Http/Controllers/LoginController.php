@@ -20,4 +20,15 @@ class LoginController extends Controller
 
         return redirect('/');
     }
+
+    public function logout()
+    {
+        auth()->logout();
+
+        request()->session()->invalidate();
+
+        alert('Hasta pronto!');
+
+        return redirect('/');
+    }
 }

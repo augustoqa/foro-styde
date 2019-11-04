@@ -44,7 +44,7 @@ class Post extends Model
 
     public function scopeCategory($query, Category $category = null)
     {
-        if ($category && $category->exists) {
+        if (optional($category)->exists) {
             $query->where('category_id', $category->id);
         }
     }
